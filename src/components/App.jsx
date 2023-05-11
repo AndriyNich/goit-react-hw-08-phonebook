@@ -1,9 +1,10 @@
-import { TableContacts } from './TableContacts/TableContacts';
+import React from 'react';
+import { Contacts } from './Contacts/Contacts';
 
 export const App = () => {
   return (
     <div>
-      <TableContacts />
+      <Contacts />
     </div>
   );
 };
