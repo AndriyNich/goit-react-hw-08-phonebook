@@ -1,12 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const modalsInitialSate = {
-  isOpen: false,
-};
-
 export const modalStatus = {
   OPEN: true,
   CLOSE: false,
+};
+
+export const modalsType = {
+  NULL: 'null',
+  CONTACTS: 'contacts',
+  LOGIN: 'login',
+  REGISTRATION: 'registration',
+};
+
+const modalsInitialSate = {
+  isOpen: false,
+  modalType: modalsType.NULL,
 };
 
 const modalsSlice = createSlice({
@@ -16,7 +24,8 @@ const modalsSlice = createSlice({
     setModalStatus: {
       reducer(state, action) {
         console.log(`open modal ${action.payload}`);
-        state.isOpen = action.payload;
+        state.isOpen = action.payload !== modalsType.NULL;
+        state.modalType = action.payload;
       },
     },
   },

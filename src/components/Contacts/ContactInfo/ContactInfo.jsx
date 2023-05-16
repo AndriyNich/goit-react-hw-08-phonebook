@@ -2,9 +2,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { ButtonWraper } from './ContactInfo.styled';
 import { useDispatch } from 'react-redux';
-import { modalStatus, setModalStatus } from 'redux/Modals/ModalsSlice';
+import { modalsType, setModalStatus } from 'redux/Modals/ModalsSlice';
 
 export function ContactInfo() {
   const dispatch = useDispatch();
@@ -20,27 +19,25 @@ export function ContactInfo() {
     >
       <TextField id="contact-name" label="Contact name" variant="outlined" />
       <TextField id="phone-number" label="Phone number" variant="outlined" />
-      <ButtonWraper>
-        <Button
-          variant="outlined"
-          sx={{ marginBottom: 2, marginTop: 2 }}
-          onClick={() => {
-            console.log('Save');
-          }}
-        >
-          Save
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ marginBottom: 2, marginTop: 2 }}
-          onClick={() => {
-            console.log('Exit');
-            dispatch(setModalStatus(modalStatus.CLOSE));
-          }}
-        >
-          Exit
-        </Button>
-      </ButtonWraper>
+      <Button
+        variant="outlined"
+        sx={{ marginBottom: 2, marginTop: 2 }}
+        onClick={() => {
+          console.log('Save');
+        }}
+      >
+        Save
+      </Button>
+      <Button
+        variant="outlined"
+        sx={{ marginBottom: 2, marginTop: 2 }}
+        onClick={() => {
+          console.log('Exit');
+          dispatch(setModalStatus(modalsType.NULL));
+        }}
+      >
+        Exit
+      </Button>
     </Box>
   );
 }
