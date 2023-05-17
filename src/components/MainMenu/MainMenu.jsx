@@ -10,10 +10,15 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Link from '@mui/material/Link';
 import Logout from '@mui/icons-material/Logout';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { modalsType, setModalStatus } from 'redux/Modals/ModalsSlice';
+import { authOperations } from 'redux/auth/authOperations';
+import authSelectors from 'redux/auth/authSelectors';
 
 export default function MainMenu() {
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  const username = useSelector(authSelectors.getUsername);
+  const email = useSelector(authSelectors.getEmail);
   const [anchorEl, setAnchorEl] = useState(null); // (useState < null) | (HTMLElement > null);
   const open = Boolean(anchorEl);
   const handleClick = event => {
@@ -42,6 +47,7 @@ export default function MainMenu() {
 
   const handleLogOut = () => {
     handleClose();
+    dispatch(authOperations.logOut());
     console.log('Log out');
   };
 
@@ -76,16 +82,18 @@ export default function MainMenu() {
           >
             Main
           </Link>
-          <Link
-            component="button"
-            variant="h6"
-            underline="hover"
-            onClick={() => {
-              console.info('GoTo Contacts');
-            }}
-          >
-            Contacts
-          </Link>
+          {isLoggedIn && (
+            <Link
+              component="button"
+              variant="h6"
+              underline="hover"
+              onClick={() => {
+                console.info('GoTo Contacts');
+              }}
+            >
+              Contacts
+            </Link>
+          )}
         </Box>
         <Tooltip title="Account settings">
           <IconButton
@@ -135,25 +143,33 @@ export default function MainMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleSingIn}>
-          <Avatar /> SingIn
-        </MenuItem>
-        <MenuItem onClick={handleMyAccount}>
-          <Avatar /> My account
-        </MenuItem>
+        {!isLoggedIn && (
+          <MenuItem onClick={handleSingIn}>
+            <Avatar /> SingIn
+          </MenuItem>
+        )}
+        {isLoggedIn && (
+          <MenuItem onClick={handleMyAccount}>
+            <Avatar /> {`${username} (${email})`}
+          </MenuItem>
+        )}
         <Divider />
-        <MenuItem onClick={handleRegistration}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleLogOut}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        {!isLoggedIn && (
+          <MenuItem onClick={handleRegistration}>
+            <ListItemIcon>
+              <PersonAdd fontSize="small" />
+            </ListItemIcon>
+            Add another account
+          </MenuItem>
+        )}
+        {isLoggedIn && (
+          <MenuItem onClick={handleLogOut}>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        )}
       </Menu>
     </React.Fragment>
   );
