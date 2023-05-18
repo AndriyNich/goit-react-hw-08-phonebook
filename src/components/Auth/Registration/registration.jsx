@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import { setModalStatus, modalsType } from 'redux/modals/slice';
 import { authOperations } from 'redux/auth/operations';
-import { selectModals } from 'redux/modals/selectors';
+// import { selectModals } from 'redux/modals/selectors';
 import {
   FormControl,
   IconButton,
