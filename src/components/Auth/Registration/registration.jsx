@@ -3,9 +3,9 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
-import { setModalStatus, modalsType } from 'redux/Modals/ModalsSlice';
-import { authOperations } from 'redux/auth/authOperations';
-import { selectModals } from 'redux/selectors';
+import { setModalStatus, modalsType } from 'redux/modals/slice';
+import { authOperations } from 'redux/auth/operations';
+import { selectModals } from 'redux/modals/selectors';
 import {
   FormControl,
   IconButton,
@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-export function Registration() {
+const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
@@ -90,4 +90,6 @@ export function Registration() {
       </Button>
     </Box>
   );
-}
+};
+
+export default Registration;

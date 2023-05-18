@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { selectModals } from 'redux/selectors';
-import { setModalStatus, modalsType } from 'redux/Modals/ModalsSlice';
-import { ContactInfo } from 'components/Contacts/ContactInfo/ContactInfo';
-import { Login } from 'components/Auth/Login/Login';
-import { Registration } from 'components/Auth/Registration/Registration';
+import { selectModals } from 'redux/modals/selectors';
+import { setModalStatus, modalsType } from 'redux/modals/slice';
 
 const style = {
   position: 'absolute',
@@ -20,6 +17,14 @@ const style = {
   p: 4,
 };
 
+const LazyContactInfo = lazy(() =>
+  import('components/Contacts/ContactInfo/ContactInfo.jsx')
+);
+const LazyLogin = lazy(() => import('components/Auth/Login/Login.jsx'));
+const LazyRegistration = lazy(() =>
+  import('components/Auth/Registration/Registration.jsx')
+);
+
 export function ModalWraper({ children }) {
   const { modalType } = useSelector(selectModals);
   const dispatch = useDispatch();
@@ -29,17 +34,16 @@ export function ModalWraper({ children }) {
   };
 
   return (
-    <Modal
-      open={modalType !== modalsType.NULL}
-      onClose={handleClose}
-      // aria-labelledby="modal-modal-title"
-      // aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        {modalType === modalsType.CONTACTS && <ContactInfo />}
-        {modalType === modalsType.LOGIN && <Login />}
-        {modalType === modalsType.REGISTRATION && <Registration />}
-      </Box>
-    </Modal>
+    modalType !== modalsType.NULL && (
+      <Modal open={modalType !== modalsType.NULL} onClose={handleClose}>
+        <Box sx={style}>
+          <Suspense fallback={<p>Loading ....</p>}>
+            {modalType === modalsType.CONTACTS && <LazyContactInfo />}
+            {modalType === modalsType.LOGIN && <LazyLogin />}
+            {modalType === modalsType.REGISTRATION && <LazyRegistration />}
+          </Suspense>
+        </Box>
+      </Modal>
+    )
   );
 }

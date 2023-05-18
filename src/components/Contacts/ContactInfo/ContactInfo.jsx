@@ -3,10 +3,18 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
-import { modalsType, setModalStatus } from 'redux/Modals/ModalsSlice';
+import { modalsType, setModalStatus } from 'redux/modals/slice';
+import { addContact } from 'redux/contacts/operation';
 
-export function ContactInfo() {
+const ContactInfo = () => {
   const dispatch = useDispatch();
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    console.log('Save');
+    const { name, number } = event.currentTarget.elements;
+    dispatch(addContact({ name: name.value, number: number.value }));
+  };
 
   return (
     <Box
@@ -16,15 +24,14 @@ export function ContactInfo() {
       }}
       noValidate
       autoComplete="off"
+      onSubmit={handleSubmit}
     >
-      <TextField id="contact-name" label="Contact name" variant="outlined" />
-      <TextField id="phone-number" label="Phone number" variant="outlined" />
+      <TextField id="name" label="Contact name" variant="outlined" />
+      <TextField id="number" label="Phone number" variant="outlined" />
       <Button
         variant="outlined"
         sx={{ marginBottom: 2, marginTop: 2 }}
-        onClick={() => {
-          console.log('Save');
-        }}
+        type="submit"
       >
         Save
       </Button>
@@ -40,4 +47,6 @@ export function ContactInfo() {
       </Button>
     </Box>
   );
-}
+};
+
+export default ContactInfo;

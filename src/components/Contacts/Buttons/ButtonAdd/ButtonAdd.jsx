@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { setModalStatus, modalsType } from 'redux/Modals/ModalsSlice';
+import { setModalStatus, modalsType } from 'redux/modals/slice';
 
 export function ButtonAdd() {
   const dispatch = useDispatch();

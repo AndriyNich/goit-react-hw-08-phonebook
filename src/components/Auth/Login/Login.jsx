@@ -10,11 +10,11 @@ import {
   OutlinedInput,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { authOperations } from 'redux/auth/authOperations';
+import { authOperations } from 'redux/auth/operations';
 import { useDispatch } from 'react-redux';
 // import { modalStatus, setModalStatus } from 'redux/Modals/ModalsSlice';
 
-export function Login() {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(show => !show);
   const handleMouseDownPassword = event => {
@@ -81,4 +81,6 @@ export function Login() {
       </Button>
     </Box>
   );
-}
+};
+
+export default Login;

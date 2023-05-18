@@ -11,9 +11,9 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Link from '@mui/material/Link';
 import Logout from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalsType, setModalStatus } from 'redux/Modals/ModalsSlice';
-import { authOperations } from 'redux/auth/authOperations';
-import authSelectors from 'redux/auth/authSelectors';
+import { modalsType, setModalStatus } from 'redux/modals/slice';
+import { authOperations } from 'redux/auth/operations';
+import authSelectors from 'redux/auth/selectors';
 
 export default function MainMenu() {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
