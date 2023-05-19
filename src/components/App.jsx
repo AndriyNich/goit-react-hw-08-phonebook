@@ -5,6 +5,9 @@ import { PrivateRoute } from './PrivateRoute';
 import { useAuth } from 'hooks/useAuth';
 import { Layout } from './Layout';
 import { authOperations } from 'redux/auth/operations';
+import { RestrictedRoute } from './RestrictedRoute';
+import { modalsType } from 'redux/modals/slice';
+import { ModalWraper } from './ModalWraper/ModalWraper';
 
 const HomePage = lazy(() => import('../pages/Home'));
 const Contacts = lazy(() => import('../pages/Contacts'));
@@ -27,6 +30,27 @@ export const App = () => {
           path="/contacts"
           element={<PrivateRoute redirectTo="/" component={<Contacts />} />}
         />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<ModalWraper />}
+              type={modalsType.REGISTRATION}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<ModalWraper />}
+              type={modalsType.LOGIN}
+            />
+          }
+        />
+        <Route path="*" element={<HomePage />} />
       </Route>
     </Routes>
   );

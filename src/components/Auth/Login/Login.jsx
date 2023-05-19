@@ -12,7 +12,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { authOperations } from 'redux/auth/operations';
 import { useDispatch } from 'react-redux';
-// import { modalStatus, setModalStatus } from 'redux/Modals/ModalsSlice';
+import { modalsType, setModalStatus } from 'redux/modals/slice';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,13 +22,15 @@ const Login = () => {
   };
 
   const dispatch = useDispatch();
+
   const handleSubmit = event => {
-    console.log('submit');
     event.preventDefault();
     const { email, password } = event.currentTarget.elements;
     dispatch(
       authOperations.logIn({ email: email.value, password: password.value })
-    );
+    ).then(() => {
+      dispatch(setModalStatus(modalsType.NULL));
+    });
   };
 
   return (
@@ -41,7 +43,7 @@ const Login = () => {
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <TextField id="email" label="Email" variant="outlined" />
+      <TextField id="email" label="Email" variant="outlined" autoFocus />
       <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
         <InputLabel htmlFor="password">Password</InputLabel>
         <OutlinedInput
@@ -74,7 +76,7 @@ const Login = () => {
         sx={{ marginBottom: 2, marginTop: 2 }}
         onClick={() => {
           console.log('Registration');
-          // dispatch(setModalStatus(modalStatus.CLOSE));
+          dispatch(setModalStatus(modalsType.REGISTRATION));
         }}
       >
         Registration

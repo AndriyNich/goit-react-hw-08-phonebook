@@ -12,15 +12,6 @@ import { MyTableRow } from './MyTableRow/MyTableRow';
 import { selectVisibleContacts } from 'redux/contacts/selectors';
 import { useSelector } from 'react-redux';
 
-// const list = [
-//   { id: '1', name: 'Vasya', number: '999-99-99' },
-//   { id: '2', name: 'sdfsdf', number: '123-99-99' },
-//   { id: '3', name: 'adf adf adf', number: '234-99-99' },
-//   { id: '4', name: 'wertno wlertj', number: '345-99-99' },
-//   { id: '5', name: 'Frgdn sjdf ', number: '456-99-99' },
-//   { id: '6', name: 'Frgdn sjdf ', number: '456-99-99' },
-// ];
-
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#e8eaed',

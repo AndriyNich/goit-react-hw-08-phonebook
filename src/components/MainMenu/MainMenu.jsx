@@ -8,12 +8,12 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
-import Link from '@mui/material/Link';
 import Logout from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalsType, setModalStatus } from 'redux/modals/slice';
 import { authOperations } from 'redux/auth/operations';
 import authSelectors from 'redux/auth/selectors';
+import { Navigation } from 'components/Navigation/Navigation';
 
 export default function MainMenu() {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
@@ -21,6 +21,7 @@ export default function MainMenu() {
   const email = useSelector(authSelectors.getEmail);
   const [anchorEl, setAnchorEl] = useState(null); // (useState < null) | (HTMLElement > null);
   const open = Boolean(anchorEl);
+
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -48,7 +49,6 @@ export default function MainMenu() {
   const handleLogOut = () => {
     handleClose();
     dispatch(authOperations.logOut());
-    console.log('Log out');
   };
 
   return (
@@ -63,38 +63,7 @@ export default function MainMenu() {
           justifyContent: 'space-between',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            textAlign: 'center',
-            justifyContent: 'space-between',
-            gap: '30px',
-          }}
-        >
-          <Link
-            component="button"
-            variant="h6"
-            underline="hover"
-            onClick={() => {
-              console.info('GoTo Main.');
-            }}
-          >
-            Main
-          </Link>
-          {isLoggedIn && (
-            <Link
-              component="button"
-              variant="h6"
-              underline="hover"
-              onClick={() => {
-                console.info('GoTo Contacts');
-              }}
-            >
-              Contacts
-            </Link>
-          )}
-        </Box>
+        <Navigation />
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -104,7 +73,13 @@ export default function MainMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>A</Avatar>
+            {isLoggedIn ? (
+              <Avatar sx={{ fontWight: 700, fontSize: 20 }}>
+                {username[0].charAt(0)}
+              </Avatar>
+            ) : (
+              <Avatar />
+            )}
           </IconButton>
         </Tooltip>
       </Box>

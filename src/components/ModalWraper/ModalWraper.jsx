@@ -1,9 +1,11 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { selectModals } from 'redux/modals/selectors';
 import { setModalStatus, modalsType } from 'redux/modals/slice';
+import authSelectors from 'redux/auth/selectors';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -25,13 +27,23 @@ const LazyRegistration = lazy(() =>
   import('components/Auth/Registration/Registration.jsx')
 );
 
-export function ModalWraper({ children }) {
+export function ModalWraper() {
   const { modalType } = useSelector(selectModals);
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  const navigate = useNavigate();
 
   const handleClose = () => {
     dispatch(setModalStatus(modalsType.NULL));
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/contacts');
+    } else {
+      navigate('/');
+    }
+  }, [navigate, isLoggedIn]);
 
   return (
     modalType !== modalsType.NULL && (

@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import { useDispatch } from 'react-redux';
 import { setModalStatus, modalsType } from 'redux/modals/slice';
 import { authOperations } from 'redux/auth/operations';
-// import { selectModals } from 'redux/modals/selectors';
 import {
   FormControl,
   IconButton,
@@ -14,9 +13,11 @@ import {
   OutlinedInput,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useRedirectContacts } from 'hooks/useRedirectContacts';
 
 const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const redirectToContacts = useRedirectContacts();
 
   const dispatch = useDispatch();
 
@@ -36,7 +37,6 @@ const Registration = () => {
         password: password.value,
       })
     );
-    // dispatch(selectModals(modalsType.NULL));
   };
 
   return (
@@ -49,7 +49,7 @@ const Registration = () => {
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <TextField id="login" label="Login" variant="outlined" />
+      <TextField id="login" label="Login" variant="outlined" autoFocus />
       <TextField id="email" label="e-mail" variant="outlined" />
       <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
         <InputLabel htmlFor="password">Password</InputLabel>
@@ -84,6 +84,7 @@ const Registration = () => {
         onClick={() => {
           console.log('Registration Exit');
           dispatch(setModalStatus(modalsType.NULL));
+          redirectToContacts();
         }}
       >
         Exit

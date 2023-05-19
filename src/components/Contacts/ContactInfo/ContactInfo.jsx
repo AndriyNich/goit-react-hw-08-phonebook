@@ -26,7 +26,7 @@ const ContactInfo = () => {
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <TextField id="name" label="Contact name" variant="outlined" />
+      <TextField id="name" label="Contact name" variant="outlined" autoFocus />
       <TextField id="number" label="Phone number" variant="outlined" />
       <Button
         variant="outlined"
