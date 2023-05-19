@@ -27,10 +27,6 @@ export const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route
-          path="/contacts"
-          element={<PrivateRoute redirectTo="/" component={<Contacts />} />}
-        />
-        <Route
           path="/register"
           element={
             <RestrictedRoute
@@ -49,6 +45,10 @@ export const App = () => {
               type={modalsType.LOGIN}
             />
           }
+        />
+        <Route
+          path="/contacts"
+          element={<PrivateRoute redirectTo="/" component={<Contacts />} />}
         />
         <Route path="*" element={<HomePage />} />
       </Route>
