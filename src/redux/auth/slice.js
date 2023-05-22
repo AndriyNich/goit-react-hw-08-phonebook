@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authOperations } from './operations';
-// import { useRedirectContacts } from 'hooks/useRedirectContacts';
 
 const initialState = {
   user: { name: null, email: null },
@@ -8,11 +7,6 @@ const initialState = {
   isLoggedIn: false,
   isRefreshing: false,
 };
-
-// const Redirect = () => {
-//   const redirectToContacts = useRedirectContacts();
-//   redirectToContacts();
-// };
 
 const authSlice = createSlice({
   name: 'auth',
