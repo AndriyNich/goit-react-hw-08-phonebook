@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+// import { fetchContact } from 'redux/contact/slice';
 
 export const modalStatus = {
   OPEN: true,
@@ -27,8 +28,18 @@ const modalsSlice = createSlice({
         state.modalType = action.payload;
       },
     },
+    fetchContactModal: {
+      reducer(state, action) {
+        console.log(`fetchContact in modals ${action.payload}`);
+        state.isOpen = action.payload !== modalsType.NULL;
+        if (action.payload.id !== '') {
+          state.modalType = modalsType.CONTACTS;
+        }
+      },
+    },
   },
+  extraReducers: {},
 });
 
-export const { setModalStatus } = modalsSlice.actions;
+export const { setModalStatus, fetchContactModal } = modalsSlice.actions;
 export const modalsReducer = modalsSlice.reducer;

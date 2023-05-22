@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { setModalStatus, modalsType } from 'redux/modals/slice';
+import { newContact } from 'redux/contact/slice';
 
 export function ButtonAdd() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ export function ButtonAdd() {
       startIcon={<AddIcon />}
       onClick={() => {
         console.log('add contact');
+        dispatch(newContact());
         dispatch(setModalStatus(modalsType.CONTACTS));
       }}
     >
