@@ -4,13 +4,13 @@ import { Helmet } from 'react-helmet';
 import { Contacts } from 'components/Contacts/Contacts';
 import { fetchContacts } from 'redux/contacts/operation';
 import authSelectors from 'redux/auth/selectors';
+import { selectLoading } from 'redux/contacts/selectors';
 
 export default function Tasks() {
   const dispatch = useDispatch();
-  //   const isLoading = useSelector(selectLoading);
   const { email } = useSelector(authSelectors.getUser);
+  const isLoading = useSelector(selectLoading);
 
-  console.log(email);
   useEffect(() => {
     if (email !== null) {
       dispatch(fetchContacts());
@@ -22,10 +22,9 @@ export default function Tasks() {
       <Helmet>
         <title>Your contacts</title>
       </Helmet>
-      {/* <TaskEditor />
-      <div>{isLoading && 'Request in progress...'}</div>
-      <TaskList /> */}
-      <Contacts />
+      <Contacts>
+        <div>{isLoading && 'Request in progress...'}</div>
+      </Contacts>
     </>
   );
 }

@@ -75,7 +75,6 @@ const Login = () => {
         variant="outlined"
         sx={{ marginBottom: 2, marginTop: 2 }}
         onClick={() => {
-          console.log('Registration');
           dispatch(setModalStatus(modalsType.REGISTRATION));
         }}
       >

@@ -27,14 +27,8 @@ export const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route
-          path="/register"
-          element={
-            <RestrictedRoute
-              redirectTo="/contacts"
-              component={<ModalWraper />}
-              type={modalsType.REGISTRATION}
-            />
-          }
+          path="/contacts"
+          element={<PrivateRoute redirectTo="/" component={<Contacts />} />}
         />
         <Route
           path="/login"
@@ -47,9 +41,13 @@ export const App = () => {
           }
         />
         <Route
-          path="/contacts"
+          path="/register"
           element={
-            <PrivateRoute redirectTo="/login" component={<Contacts />} />
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<ModalWraper />}
+              type={modalsType.REGISTRATION}
+            />
           }
         />
         <Route path="*" element={<HomePage />} />

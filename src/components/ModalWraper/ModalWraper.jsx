@@ -38,7 +38,6 @@ export function ModalWraper() {
   };
 
   useEffect(() => {
-    console.log('rr1');
     return navigate(isLoggedIn ? '/contacts' : '/');
   }, [navigate, isLoggedIn]);
 

@@ -13,11 +13,9 @@ import {
   OutlinedInput,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useRedirectContacts } from 'hooks/useRedirectContacts';
 
 const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const redirectToContacts = useRedirectContacts();
 
   const dispatch = useDispatch();
 
@@ -82,9 +80,7 @@ const Registration = () => {
         variant="outlined"
         sx={{ marginBottom: 2, marginTop: 2 }}
         onClick={() => {
-          console.log('Registration Exit');
           dispatch(setModalStatus(modalsType.NULL));
-          redirectToContacts();
         }}
       >
         Exit
