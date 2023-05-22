@@ -14,6 +14,7 @@ import {
 import { modalsReducer } from './modals/slice';
 import { authReducer } from './auth/slice';
 import { contactsReducer } from './contacts/slice';
+import { filterReducer } from './filter/slice';
 
 // const middleware = [
 //   ...
@@ -30,6 +31,7 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     modals: modalsReducer,
     contacts: contactsReducer,
+    filter: filterReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
