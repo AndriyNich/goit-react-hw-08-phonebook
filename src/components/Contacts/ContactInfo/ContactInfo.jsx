@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalsType, setModalStatus } from 'redux/modals/slice';
 import { addContact, patchContact } from 'redux/contacts/operation';
 import { selectContact } from 'redux/contact/selectors';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ContactSchema } from 'services/yup';
 
 const ContactInfo = () => {
   const dispatch = useDispatch();
   const contact = useSelector(selectContact);
 
-  console.log(`id ${contact}`);
-  const handleSubmit = event => {
+  const handleSubmitMy = event => {
+    console.log('submit');
     event.preventDefault();
     const { name, number } = event.currentTarget.elements;
 
@@ -26,6 +29,10 @@ const ContactInfo = () => {
     dispatch(setModalStatus(modalsType.NULL));
   };
 
+  const { register, handleSubmit } = useForm({
+    resolver: yupResolver(ContactSchema),
+  });
+
   useEffect(() => {
     console.log(contact);
   }, [contact]);
@@ -38,7 +45,7 @@ const ContactInfo = () => {
       }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(handleSubmitMy)}
     >
       <TextField
         id="name"
@@ -46,6 +53,7 @@ const ContactInfo = () => {
         variant="outlined"
         autoFocus
         defaultValue={contact.name}
+        {...register('name')}
       />
       <TextField
         id="number"
