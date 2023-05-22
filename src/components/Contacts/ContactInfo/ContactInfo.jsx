@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalsType, setModalStatus } from 'redux/modals/slice';
-import { addContact } from 'redux/contacts/operation';
+import { addContact, patchContact } from 'redux/contacts/operation';
 import { selectContact } from 'redux/contact/selectors';
 
 const ContactInfo = () => {
@@ -16,7 +16,14 @@ const ContactInfo = () => {
     event.preventDefault();
     const { name, number } = event.currentTarget.elements;
 
-    dispatch(addContact({ name: name.value, number: number.value }));
+    if (contact.id !== '') {
+      dispatch(
+        patchContact({ id: contact.id, name: name.value, number: number.value })
+      );
+    } else {
+      dispatch(addContact({ name: name.value, number: number.value }));
+    }
+    dispatch(setModalStatus(modalsType.NULL));
   };
 
   useEffect(() => {
@@ -38,13 +45,13 @@ const ContactInfo = () => {
         label="Contact name"
         variant="outlined"
         autoFocus
-        value={contact.name}
+        defaultValue={contact.name}
       />
       <TextField
         id="number"
         label="Phone number"
         variant="outlined"
-        value={contact.number}
+        defaultValue={contact.number}
       />
       <Button
         variant="outlined"
