@@ -38,7 +38,6 @@ export default function MainMenu() {
 
   const handleMyAccount = () => {
     handleClose();
-    console.log('GoTo my account');
   };
 
   const handleRegistration = () => {

@@ -30,7 +30,6 @@ const modalsSlice = createSlice({
     },
     fetchContactModal: {
       reducer(state, action) {
-        console.log(`fetchContact in modals ${action.payload}`);
         state.isOpen = action.payload !== modalsType.NULL;
         if (action.payload.id !== '') {
           state.modalType = modalsType.CONTACTS;

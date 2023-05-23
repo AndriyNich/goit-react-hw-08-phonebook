@@ -11,7 +11,7 @@ const contactSlice = createSlice({
   initialState,
   reducers: {
     newContact: {
-      reducer(state, action) {
+      reducer(state) {
         state.id = '';
         state.name = '';
         state.number = '';
@@ -25,6 +25,7 @@ const contactSlice = createSlice({
       },
     },
   },
+  extraReducers: {},
 });
 
 export const contactReducer = contactSlice.reducer;

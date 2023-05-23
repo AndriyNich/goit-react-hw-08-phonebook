@@ -39,7 +39,6 @@ const contactsSlice = createSlice({
       state.items = action.payload;
     },
     [addContact.fulfilled](state, action) {
-      console.log('push');
       state.items.push(action.payload);
     },
     [deleteContact.fulfilled](state, action) {
@@ -56,7 +55,6 @@ const contactsSlice = createSlice({
       state.isLoading = false;
     },
     [patchContact.fulfilled](state, action) {
-      console.log(action.payload);
       for (let i = 0; i < state.items.length; i++) {
         if (state.items[i].id === action.payload.id) {
           state.items[i].name = action.payload.name;

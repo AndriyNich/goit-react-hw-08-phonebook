@@ -14,7 +14,6 @@ export function ButtonAdd() {
       sx={{ marginBottom: 2, marginTop: 2 }}
       startIcon={<AddIcon />}
       onClick={() => {
-        console.log('add contact');
         dispatch(newContact());
         dispatch(setModalStatus(modalsType.CONTACTS));
       }}

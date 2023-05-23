@@ -14,3 +14,14 @@ export const ContactSchema = Yup.object().shape({
       'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
     ),
 });
+
+export const AuthSchema = Yup.object().shape({
+  email: Yup.string().required().email(),
+  password: Yup.string().required().min(6),
+});
+
+export const RegisterSchema = Yup.object().shape({
+  login: Yup.string().required().min(6),
+  email: Yup.string().required().email(),
+  password: Yup.string().required().min(6),
+});

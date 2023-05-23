@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -13,6 +14,9 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { authOperations } from 'redux/auth/operations';
 import { useDispatch } from 'react-redux';
 import { modalsType, setModalStatus } from 'redux/modals/slice';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { AuthSchema } from 'services/yup';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,14 +25,19 @@ const Login = () => {
     event.preventDefault();
   };
 
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(AuthSchema),
+  });
+
   const dispatch = useDispatch();
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const { email, password } = event.currentTarget.elements;
-    dispatch(
-      authOperations.logIn({ email: email.value, password: password.value })
-    ).then(() => {
+  const handleSubmitForm = data => {
+    const { email, password } = data;
+    dispatch(authOperations.logIn({ email, password })).then(() => {
       dispatch(setModalStatus(modalsType.NULL));
     });
   };
@@ -41,10 +50,22 @@ const Login = () => {
       }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(handleSubmitForm)}
     >
-      <TextField id="email" label="Email" variant="outlined" autoFocus />
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+      <TextField
+        error={!!errors.email}
+        id="email"
+        label="Email"
+        variant="outlined"
+        autoFocus
+        helperText={errors.email ? errors.email.message : ''}
+        {...register('email')}
+      />
+      <FormControl
+        sx={{ m: 1, width: '25ch' }}
+        variant="outlined"
+        error={!!errors.password}
+      >
         <InputLabel htmlFor="password">Password</InputLabel>
         <OutlinedInput
           id="password"
@@ -62,7 +83,11 @@ const Login = () => {
             </InputAdornment>
           }
           label="Password"
+          {...register('password')}
         />
+        <FormHelperText id="password-text">
+          {errors.password ? errors.password.message : ''}
+        </FormHelperText>
       </FormControl>
       <Button
         variant="outlined"

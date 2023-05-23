@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -13,29 +13,24 @@ import { ContactSchema } from 'services/yup';
 const ContactInfo = () => {
   const dispatch = useDispatch();
   const contact = useSelector(selectContact);
-
-  const handleSubmitMy = event => {
-    console.log('submit');
-    event.preventDefault();
-    const { name, number } = event.currentTarget.elements;
-
-    if (contact.id !== '') {
-      dispatch(
-        patchContact({ id: contact.id, name: name.value, number: number.value })
-      );
-    } else {
-      dispatch(addContact({ name: name.value, number: number.value }));
-    }
-    dispatch(setModalStatus(modalsType.NULL));
-  };
-
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
     resolver: yupResolver(ContactSchema),
   });
 
-  useEffect(() => {
-    console.log(contact);
-  }, [contact]);
+  const handleSubmitForm = data => {
+    const { name, number } = data;
+
+    if (contact.id !== '') {
+      dispatch(patchContact({ id: contact.id, name, number }));
+    } else {
+      dispatch(addContact({ name, number }));
+    }
+    dispatch(setModalStatus(modalsType.NULL));
+  };
 
   return (
     <Box
@@ -45,21 +40,26 @@ const ContactInfo = () => {
       }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit(handleSubmitMy)}
+      onSubmit={handleSubmit(handleSubmitForm)}
     >
       <TextField
+        error={!!errors.name}
         id="name"
         label="Contact name"
         variant="outlined"
         autoFocus
         defaultValue={contact.name}
+        helperText={errors.name ? errors.name.message : ''}
         {...register('name')}
       />
       <TextField
+        error={!!errors.number}
         id="number"
         label="Phone number"
         variant="outlined"
         defaultValue={contact.number}
+        helperText={errors.number ? errors.number.message : ''}
+        {...register('number')}
       />
       <Button
         variant="outlined"
@@ -72,7 +72,6 @@ const ContactInfo = () => {
         variant="outlined"
         sx={{ marginBottom: 2, marginTop: 2 }}
         onClick={() => {
-          console.log('Exit');
           dispatch(setModalStatus(modalsType.NULL));
         }}
       >
